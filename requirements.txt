@@ -1,0 +1,19 @@
+# Django web framework
+Django~=5.1.1
+
+# Django REST Framework for building APIs
+djangorestframework>=3.12.4
+
+# JWT Authentication
+djangorestframework-simplejwt>=5.2.2
+
+# PostgreSQL database adapter for Django
+psycopg2>=2.9.3
+
+# Swagger documentation for DRF using drf-yasg
+drf-yasg>=1.21.4
+
+# Gunicorn - WSGI HTTP Server (optional, for production)
+gunicorn>=20.1.0
+
+#djangorestframework-simplejwt[blacklist]

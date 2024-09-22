@@ -1,5 +1,5 @@
 """
-URL configuration for securityDrfJwt project.
+URL configuration for config project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -14,9 +14,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-# from django.contrib import admin
+# urls.py
+
 from django.urls import path
+from rest_framework_simplejwt.views import TokenRefreshView
+from security.views import CustomTokenObtainPairView, RegisterView, ProtectedView, AdminView
 
 urlpatterns = [
-    #    path('admin/', admin.site.urls),
+    # JWT login and refresh token endpoints
+    path('api/login/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # User registration endpoint
+    path('api/register/', RegisterView.as_view(), name='register'),
+
+    # Protected view
+    path('api/protected/', ProtectedView.as_view(), name='protected'),
+]
+urlpatterns += [
+    path('api/admin/', AdminView.as_view(), name='admin'),
 ]
