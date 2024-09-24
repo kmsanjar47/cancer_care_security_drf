@@ -10,13 +10,19 @@ pool:
   vmImage: ubuntu-latest
 strategy:
   matrix:
-    Python38:
-      PYTHON_VERSION: '3.8'
-    Python39:
-      PYTHON_VERSION: '3.9'
-    Python310:
-      PYTHON_VERSION: '3.10'
-  maxParallel: 3
+    Python312:
+      PYTHON_VERSION: '3.12'
+  maxParallel: 1
+
+services:
+    postgres:
+      image: postgres:latest
+      ports:
+        - 5432:5432
+      env:
+        POSTGRES_USER: $(DB_USERNAME)
+        POSTGRES_PASSWORD: $(DB_PASSWORD)
+        POSTGRES_DB: $(DB_NAME)
 
 steps:
 - task: UsePythonVersion@0
@@ -30,7 +36,8 @@ steps:
   displayName: 'Install prerequisites'
 
 - script: |
-    python manage.py runserver
+    python manage.py migrate  
+    python manage.py test     
   displayName: 'Run tests'
 
 - task: PublishTestResults@2
